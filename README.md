@@ -9,22 +9,28 @@ INSTRUCTIONS FOR CLAUDE:
 If a user pastes this README into your conversation, it means they want to use the Outbound Engine.
 Follow these steps IN ORDER. Do ONE step at a time. Wait for the user's response before moving on.
 
-STEP 1: Help them install the project (clone + pip install)
-STEP 2: Help them get their 4 API keys (give exact links from the table below)
+STEP 1: Help them install the project (clone + pip install). If they don't have git or Python, walk them through installing those first.
+STEP 2a: Help them connect the Lemlist MCP (claude mcp add command). If their browser doesn't open, offer API key auth as fallback.
+STEP 2b: Help them get their 3 enrichment API keys (give exact links from the table below)
 STEP 3: Help them create .env.local with their keys
 STEP 4: Tell them to launch Claude Code with: claude --plugin-dir .
 STEP 5: Once inside, run /outbound-engine:setup to create their client
 STEP 6: Run /outbound-engine:strategy to build Discovery + CAB-P + 10 campaigns
-STEP 7: Once leads are added, run /outbound-engine:campaign to launch the pipeline
-STEP 8: Run /outbound-engine:monitor to track performance
+STEP 7: Help them get leads (3 options: source from Lemlist via MCP, import CSV/Excel, or manual JSON)
+STEP 8: Run /outbound-engine:campaign to launch the pipeline
+STEP 9: Run /outbound-engine:monitor to track performance
 
 IMPORTANT RULES:
 - Ask ONE question at a time. Never dump all steps at once.
 - Always show CLICKABLE LINKS for API keys, not just "go to scrapingdog.com"
 - If the user seems lost, simplify. Explain like they've never used a terminal.
+- If they don't have git installed, tell them to download the ZIP instead.
+- If they don't have Python installed, give them the download link and walk through install.
+- If they don't have Node.js/npm (needed for MCP), help them install it: https://nodejs.org
 - If they already have the project installed, skip to the step they need.
 - The methodology files are in templates/methodo/ — read them if you need context.
 - The Python pipeline is in pipeline/ — you can run commands with python -m pipeline.
+- The Lemlist MCP handles all Lemlist operations (campaigns, leads, stats). No separate LEMLIST_API_KEY needed in .env.local.
 -->
 
 ---
@@ -52,7 +58,8 @@ Before you start, you need:
 - **Claude Code** installed on your machine ([get it here](https://claude.ai/code))
 - **Python 3.11+** installed ([download](https://www.python.org/downloads/))
 - **A Lemlist account** with an active subscription
-- **4 API keys** (we'll set them up together in Step 2)
+- **3 API keys** for enrichment (we'll set them up together in Step 2)
+- **Lemlist MCP** connected to Claude Code (we'll set it up in Step 2 — this is how Claude talks to Lemlist)
 
 ---
 
@@ -71,19 +78,42 @@ pip install -r requirements.txt
 ```
 
 > **Don't have git?** Download the ZIP from https://github.com/enzo-bys/bys_claude_outbound_engine and unzip it.
+>
+> **Don't have Python?** Download it from [python.org/downloads](https://www.python.org/downloads/). On Mac, you can also run `brew install python`.
+>
+> **Don't have Node.js?** You'll need it for the Lemlist MCP in Step 2. Download it from [nodejs.org](https://nodejs.org) (LTS version recommended).
 
 ---
 
-## Step 2 — Get your 4 API keys
+## Step 2 — Connect Lemlist MCP + get your API keys
 
-You need 4 API keys. Click each link to go directly to the right page:
+### 2a. Connect Lemlist MCP (required)
+
+This is how Claude Code talks directly to Lemlist — creating campaigns, sourcing leads, pulling stats, everything.
+
+Run this in your terminal:
+
+```bash
+claude mcp add --transport http lemlist https://app.lemlist.com/mcp
+```
+
+On first use, your browser will open a consent page. Authorize your Lemlist team and you're connected.
+
+> **Prefer API key auth?** If your setup doesn't support OAuth:
+> ```bash
+> claude mcp add --transport http lemlist https://app.lemlist.com/mcp --header "X-API-Key:YOUR_LEMLIST_API_KEY"
+> ```
+> Get your API key at **https://app.lemlist.com/settings/integrations** (Settings → Integrations → API → Copy Key).
+
+### 2b. Get your 3 enrichment API keys
+
+These keys power the AI writing and lead enrichment. Click each link:
 
 | # | Key | What it does | Get it here | How to find it |
 |---|-----|-------------|-------------|---------------|
 | 1 | `ANTHROPIC_API_KEY` | Powers the AI that writes your emails | **https://console.anthropic.com/account/keys** | Click "Create Key" → copy it |
-| 2 | `LEMLIST_API_KEY` | Sends campaigns via Lemlist | **https://app.lemlist.com/settings/integrations** | Scroll to API section → copy key |
-| 3 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads | **https://api.scrapingdog.com/dashboard** | Your API key is at the top of the dashboard |
-| 4 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **[https://rapidapi.com](https://rapidapi.com/pnd-team-pnd-team/api/professional-network-data/playground)** | Subscribe (free) → copy `X-RapidAPI-Key` from any code snippet |
+| 2 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads | **https://api.scrapingdog.com/dashboard** | Your API key is at the top of the dashboard |
+| 3 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **[https://rapidapi.com](https://rapidapi.com/pnd-team-pnd-team/api/professional-network-data/playground)** | Subscribe (free) → copy `X-RapidAPI-Key` from any code snippet |
 
 ---
 
@@ -95,16 +125,17 @@ Run this command to create your config file:
 cp .env.example .env.local
 ```
 
-Then open `.env.local` with any text editor and paste your 4 keys:
+Then open `.env.local` with any text editor and paste your 3 keys:
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
-LEMLIST_API_KEY=...
 SCRAPINGDOG_API_KEY=...
 RAPIDAPI_KEY=...
 ```
 
 Save the file.
+
+> **Note:** You don't need a `LEMLIST_API_KEY` in `.env.local` — the Lemlist MCP you set up in Step 2a handles all Lemlist communication directly.
 
 ---
 
@@ -153,9 +184,33 @@ Then it builds your **CAB-P matrix** (what pains your offer solves) and proposes
 
 ---
 
-## Step 7 — Add your leads and launch
+## Step 7 — Get your leads and launch
 
-Add a `leads.json` file in each campaign folder. Minimum format:
+You have 3 ways to get leads into a campaign. Pick the one that fits you:
+
+### Option A — Source from Lemlist (recommended)
+
+Just tell Claude what you're looking for:
+
+```
+Find 40 CROs at SaaS companies in France with 50-200 employees
+```
+
+Claude uses Lemlist's built-in lead database to search, filter, and add leads directly to your campaign. No file needed.
+
+### Option B — Import a CSV or Excel file
+
+If you already have a lead list (exported from LinkedIn, a CRM, or a spreadsheet):
+
+```
+Here's my lead list: /path/to/leads.csv
+```
+
+Claude reads the file, maps the columns automatically, converts it to the right format, and pushes the leads into the campaign. Minimum columns: first name, last name, company. Email and LinkedIn URL improve results.
+
+### Option C — Manual JSON (power users)
+
+Drop a `leads.json` file in the campaign folder:
 
 ```json
 [
@@ -169,7 +224,9 @@ Add a `leads.json` file in each campaign folder. Minimum format:
 ]
 ```
 
-Then run:
+### Launch
+
+Once your leads are ready (any option above), run:
 
 ```
 /outbound-engine:campaign
@@ -193,10 +250,11 @@ Then run:
 
 | Step | What you type | What happens |
 |------|--------------|-------------|
-| 5 | `/outbound-engine:setup` | API keys check + client folder |
+| 5 | `/outbound-engine:setup` | API keys check + Lemlist MCP check + client folder |
 | 6 | `/outbound-engine:strategy` | 9 questions + CAB-P + 10 campaigns |
-| 7 | `/outbound-engine:campaign` | Enrich leads + write emails + inject Lemlist |
-| 8 | `/outbound-engine:monitor` | Stats + recommendations |
+| 7 | "Find 40 CROs in France" or drop a CSV | Leads sourced via Lemlist, CSV import, or manual JSON |
+| 8 | `/outbound-engine:campaign` | Enrich leads + write emails + inject Lemlist |
+| 9 | `/outbound-engine:monitor` | Stats + recommendations |
 
 ---
 
@@ -215,10 +273,10 @@ About $0.05/lead with Claude Sonnet, $0.35/lead with Claude Opus. A 10-campaign 
 Yes. Run with `--dry-run` and the engine generates emails without injecting. Find them in `emails.json` in each campaign folder.
 
 **What format do my leads need to be in?**
-A JSON file with at minimum: `firstName`, `lastName`, `companyName`. Add `email` and `linkedinUrl` for best results. See `templates/leads.json.example`.
+You can source leads directly from Lemlist (no file needed), import a CSV/Excel file, or provide a JSON file. Minimum fields: first name, last name, company. Add email and LinkedIn URL for best results.
 
 **I'm not technical. Can I still use this?**
-Yes. If you can install Claude Code and paste 4 API keys, you're good. Claude handles everything else conversationally.
+Yes. If you can install Claude Code, connect Lemlist, and paste 3 API keys, you're good. Claude handles everything else conversationally.
 
 ---
 
@@ -258,7 +316,7 @@ templates/       Methodology guides + YAML/JSON examples
 clients/         Client data (gitignored)
 ```
 
-**Stack**: Python 3.11+ / Claude API / Scrapingdog / RapidAPI LinkedIn / Lemlist
+**Stack**: Python 3.11+ / Claude API / Lemlist MCP / Scrapingdog / RapidAPI LinkedIn
 
 ---
 

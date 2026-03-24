@@ -16,24 +16,54 @@ pip install -r requirements.txt
 
 ## Flow
 
-### 1. Check API keys
+### 0. Check prerequisites
 
-Read `.env.local` and verify these 4 keys are present:
+Before anything, verify the user has the required tools installed. For EACH missing tool, give them the exact install command or download link:
+
+| Tool | Check command | Install help |
+|------|--------------|-------------|
+| Python 3.11+ | `python3 --version` | Download from [python.org/downloads](https://www.python.org/downloads/). Mac: `brew install python` |
+| Node.js (for MCP) | `node --version` | Download from [nodejs.org](https://nodejs.org) (LTS version) |
+| pip dependencies | `pip install -r requirements.txt` | Run this in the project folder |
+
+If the user seems lost with the terminal, explain each step simply. Don't assume they know what a terminal is.
+
+### 1. Check Lemlist MCP connection
+
+Verify the Lemlist MCP is connected by attempting to use a Lemlist MCP tool (e.g., `get_team_info`).
+
+If NOT connected, help the user set it up:
+
+```bash
+claude mcp add --transport http lemlist https://app.lemlist.com/mcp
+```
+
+Explain: "This connects Claude directly to your Lemlist account. A browser tab will open — authorize your team and you're done."
+
+If OAuth fails (browser doesn't open), offer the API key fallback:
+```bash
+claude mcp add --transport http lemlist https://app.lemlist.com/mcp --header "X-API-Key:YOUR_API_KEY"
+```
+Get the API key at: **https://app.lemlist.com/settings/integrations** (Settings → Integrations → API → Copy Key)
+
+### 2. Check enrichment API keys
+
+Read `.env.local` and verify these 3 keys are present:
+- `ANTHROPIC_API_KEY`
 - `SCRAPINGDOG_API_KEY`
 - `RAPIDAPI_KEY`
-- `ANTHROPIC_API_KEY`
-- `LEMLIST_API_KEY`
 
 For EACH missing key, show the user the exact link to get it with clear instructions:
 
 | Key | What it does | Sign up link | Where to find the key |
 |-----|-------------|-------------|----------------------|
 | `ANTHROPIC_API_KEY` | Powers the AI that writes emails | https://console.anthropic.com/account/keys | Console → API Keys → Create Key |
-| `LEMLIST_API_KEY` | Injects leads into Lemlist campaigns | https://app.lemlist.com/settings/integrations | Settings → Integrations → API → Copy Key |
 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads' companies | https://api.scrapingdog.com/dashboard | Dashboard → Your API Key (top of page) |
 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api | Subscribe → Copy `X-RapidAPI-Key` from code snippet |
 
 IMPORTANT: Always show the CLICKABLE LINKS in a table format so the user can open them directly. Do not just say "go to scrapingdog.com" — give the exact URL to the API key page.
+
+Note: No `LEMLIST_API_KEY` needed — the MCP handles all Lemlist communication.
 
 If `.env.local` does not exist, copy from `.env.example`.
 

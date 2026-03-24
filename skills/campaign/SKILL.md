@@ -9,11 +9,29 @@ You launch the prospecting pipeline and supervise execution.
 
 ## Prerequisites
 - `client.yaml` + at least one `campaign.yaml` with `status: draft`
-- `leads.json` present in the campaign folder (provided by the user)
+- Leads available via one of 3 sources (see below)
 
 ## Flow
 
-### 1. Verify leads
+### 1. Get leads
+
+Ask the user how they want to provide leads. Support 3 sources:
+
+**Option A — Source from Lemlist (recommended)**
+Use the Lemlist MCP tool `lemleads_search` to find leads matching the campaign's ICP criteria (persona, geo, company size, industry from `campaign.yaml` and `ciblage.md`).
+- Present the search results to the user for validation before proceeding
+- Once validated, save as `leads.json` in the campaign folder for the pipeline
+
+**Option B — Import CSV/Excel**
+If the user provides a CSV or Excel file:
+- Read the file and auto-detect column mapping (first name, last name, company, email, LinkedIn URL)
+- Show the mapping to the user for confirmation
+- Convert to `leads.json` format and save in the campaign folder
+
+**Option C — Manual JSON**
+If `leads.json` already exists in the campaign folder, use it directly.
+
+### 2. Verify leads
 
 Read `leads.json` and check:
 - Required fields: firstName, lastName, companyName

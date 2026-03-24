@@ -69,4 +69,9 @@ Reference: `templates/methodo/ciblage-guide.md`
 - The tone is inferred from the persona x geo combination (formal FR, startup casual, etc.)
 
 ## Next step
-Once validated, direct the user to: "Add your leads.json files and run `/outbound-engine:campaign` to launch."
+Once validated, direct the user to get their leads. Explain the 3 options:
+1. **Source from Lemlist** (recommended): "Tell me your ICP criteria and I'll search Lemlist's lead database directly"
+2. **Import a CSV/Excel file**: "Drop your lead file and I'll convert it automatically"
+3. **Manual JSON**: "Add a `leads.json` file in each campaign folder"
+
+Then: "Once your leads are ready, run `/outbound-engine:campaign` to launch."
