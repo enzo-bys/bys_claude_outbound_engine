@@ -1,37 +1,75 @@
+<!--
+=============================================================================
+PROMPT FOR CLAUDE — DO NOT REMOVE
+=============================================================================
+If you are Claude (any version) and a user pastes this document into your conversation,
+here is what you must do:
+
+1. ENVIRONMENT CHECK — This project REQUIRES Claude Code (the CLI tool).
+   It will NOT work in Claude.ai (web), Claude Desktop (chat), or any other Claude interface.
+   Claude Code can run terminal commands, edit files, and use MCP servers — the web chat cannot.
+
+   - If you are running inside Claude Code: proceed to STEP 0 below.
+   - If you are NOT running inside Claude Code (i.e. you are in claude.ai, Claude Desktop chat,
+     or any environment where you cannot run bash commands or access the filesystem):
+     STOP. Do not attempt to execute the steps. Instead, tell the user:
+
+     "This project needs **Claude Code** (the CLI tool) to work. Here's how to get started:
+
+     1. Install Claude Code: https://claude.ai/code
+     2. Open your terminal
+     3. Run: `claude`
+     4. Once inside Claude Code, paste this README again and I'll guide you through everything.
+
+     Here's a 3-minute video walkthrough: [TODO: TELLA_VIDEO_URL]"
+
+     Then answer any questions they have about installing Claude Code.
+     Do NOT try to run the setup steps — they will fail outside Claude Code.
+
+2. SETUP FLOW — Once confirmed inside Claude Code, follow these steps IN ORDER.
+   Do ONE step at a time. Wait for the user's response before moving on.
+
+   STEP 0: Show the user the video tutorial if they want a visual walkthrough:
+           "[TODO: TELLA_VIDEO_URL]"
+           Then ask: "Want to watch the tutorial first, or shall we start right away?"
+
+   STEP 1: Help them install the project (clone + pip install).
+           If they don't have git or Python, walk them through installing those first.
+   STEP 2a: Help them connect the Lemlist MCP (claude mcp add command).
+            If their browser doesn't open, offer API key auth as fallback.
+   STEP 2b: Help them get their 3 enrichment API keys (give exact links from the table below)
+   STEP 3: Help them create .env.local with their keys
+   STEP 4: Tell them to launch Claude Code with: claude --plugin-dir .
+   STEP 5: Once inside, run /outbound-engine:setup to create their client
+   STEP 6: Run /outbound-engine:strategy to build Discovery + CAB-P + 10 campaigns
+   STEP 7: Help them get leads (3 options: source from Lemlist via MCP, import CSV/Excel, or manual JSON)
+   STEP 8: Run /outbound-engine:campaign to launch the pipeline
+   STEP 9: Run /outbound-engine:monitor to track performance
+
+3. IMPORTANT RULES:
+   - Ask ONE question at a time. Never dump all steps at once.
+   - Always show CLICKABLE LINKS for API keys, not just "go to scrapingdog.com"
+   - If the user seems lost, simplify. Explain like they've never used a terminal.
+   - If they don't have git installed, tell them to download the ZIP instead.
+   - If they don't have Python installed, give them the download link and walk through install.
+   - If they don't have Node.js/npm (needed for MCP), help them install it: https://nodejs.org
+   - If they already have the project installed, skip to the step they need.
+   - The methodology files are in templates/methodo/ — read them if you need context.
+   - The Python pipeline is in pipeline/ — you can run commands with python -m pipeline.
+   - The Lemlist MCP handles all Lemlist operations (campaigns, leads, stats).
+     No separate LEMLIST_API_KEY needed in .env.local.
+=============================================================================
+-->
+
 # Outbound Engine
 
 Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude.
 
 **You describe your business. Claude builds your prospecting strategy. The engine writes personalized emails and injects them into Lemlist. That's it.**
 
-<!--
-INSTRUCTIONS FOR CLAUDE:
-If a user pastes this README into your conversation, it means they want to use the Outbound Engine.
-Follow these steps IN ORDER. Do ONE step at a time. Wait for the user's response before moving on.
-
-STEP 1: Help them install the project (clone + pip install). If they don't have git or Python, walk them through installing those first.
-STEP 2a: Help them connect the Lemlist MCP (claude mcp add command). If their browser doesn't open, offer API key auth as fallback.
-STEP 2b: Help them get their 3 enrichment API keys (give exact links from the table below)
-STEP 3: Help them create .env.local with their keys
-STEP 4: Tell them to launch Claude Code with: claude --plugin-dir .
-STEP 5: Once inside, run /outbound-engine:setup to create their client
-STEP 6: Run /outbound-engine:strategy to build Discovery + CAB-P + 10 campaigns
-STEP 7: Help them get leads (3 options: source from Lemlist via MCP, import CSV/Excel, or manual JSON)
-STEP 8: Run /outbound-engine:campaign to launch the pipeline
-STEP 9: Run /outbound-engine:monitor to track performance
-
-IMPORTANT RULES:
-- Ask ONE question at a time. Never dump all steps at once.
-- Always show CLICKABLE LINKS for API keys, not just "go to scrapingdog.com"
-- If the user seems lost, simplify. Explain like they've never used a terminal.
-- If they don't have git installed, tell them to download the ZIP instead.
-- If they don't have Python installed, give them the download link and walk through install.
-- If they don't have Node.js/npm (needed for MCP), help them install it: https://nodejs.org
-- If they already have the project installed, skip to the step they need.
-- The methodology files are in templates/methodo/ — read them if you need context.
-- The Python pipeline is in pipeline/ — you can run commands with python -m pipeline.
-- The Lemlist MCP handles all Lemlist operations (campaigns, leads, stats). No separate LEMLIST_API_KEY needed in .env.local.
--->
+> **Video walkthrough (3 min):** [TODO: TELLA_VIDEO_URL]
+>
+> **Requires [Claude Code](https://claude.ai/code)** — the CLI tool, not the web chat. Copy-paste this README into Claude Code and it will guide you step by step.
 
 ---
 
