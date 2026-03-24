@@ -15,7 +15,7 @@
 > *3. Run: `claude`*
 > *4. Paste this README and I'll walk you through everything step by step.*
 >
-> *Here's a 3-min video walkthrough: [TODO: TELLA_VIDEO_URL]"*
+> *Here's a 3-min video walkthrough: https://www.tella.tv/video/lancer-50-campagnes-en-quelques-minutes-avec-notre-plugin-claude-code-bys-e7lu"*
 >
 > If you ARE inside Claude Code, follow the setup flow described in this README. Guide the user ONE step at a time. Ask ONE question at a time. Never dump all steps at once. Always show clickable links for API keys. If the user seems lost, simplify — explain like they've never used a terminal. If they don't have git, Python, or Node.js installed, help them install those first. If they already have the project set up, skip to the step they need. The Lemlist MCP handles all Lemlist operations — no separate LEMLIST_API_KEY is needed in .env.local.
 
@@ -25,7 +25,7 @@
 
 You describe your business. Claude builds your prospecting pipeline. 10 campaigns, 400 leads, personalized emails — injected into Lemlist in one session.
 
-> **Video walkthrough (3 min):** [TODO: TELLA_VIDEO_URL]
+> **Video walkthrough (3 min):** https://www.tella.tv/video/lancer-50-campagnes-en-quelques-minutes-avec-notre-plugin-claude-code-bys-e7lu
 >
 > **Requires [Claude Code](https://claude.ai/code)** — two ways to use it:
 > - **Web** (no install): fork this repo on GitHub, then open it in [Claude Code web](https://claude.ai/code)
