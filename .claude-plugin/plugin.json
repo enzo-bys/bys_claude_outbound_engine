@@ -1,0 +1,15 @@
+{
+  "name": "outbound-engine",
+  "version": "1.0.0",
+  "description": "Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude + Lemlist",
+  "author": {
+    "name": "BuildYourSales",
+    "url": "https://buildyoursales.tech"
+  },
+  "homepage": "https://buildyoursales.tech",
+  "repository": "https://github.com/Enzo-salesrun/bys_claude_outbound_engine",
+  "license": "MIT",
+  "keywords": ["outbound", "prospecting", "lemlist", "cold-email", "linkedin", "sales"],
+  "agents": "./agents/",
+  "skills": "./skills/"
+}

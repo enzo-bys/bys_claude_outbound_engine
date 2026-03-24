@@ -2,7 +2,31 @@
 
 Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude.
 
-## Quick Start
+## Install as Claude Code Plugin
+
+```bash
+# Clone the repo
+git clone https://github.com/Enzo-salesrun/bys_claude_outbound_engine.git
+
+# Install dependencies
+cd bys_claude_outbound_engine
+pip install -r requirements.txt
+
+# Launch Claude Code with the plugin
+claude --plugin-dir .
+```
+
+Then use the skills:
+```
+/outbound-engine:setup       → Set up API keys and create your client
+/outbound-engine:strategy    → Build Discovery, CAB-P, 10 targeted campaigns
+/outbound-engine:campaign    → Run the pipeline and inject into Lemlist
+/outbound-engine:monitor     → Track performance and optimize
+```
+
+Or just say: **"I want to create my first prospecting campaign"** — Claude will guide you.
+
+## Quick Start (without plugin)
 
 1. Clone the repo and install dependencies:
    ```bash
@@ -14,16 +38,14 @@ Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude.
 3. Open Claude Code in this folder and say:
    > "I want to create my first prospecting campaign"
 
-   Claude will guide you through the entire process.
+## Skills
 
-## Available Agents
-
-| Agent | What it does |
+| Skill | What it does |
 |-------|-------------|
-| setup | Configure your API keys and create your client folder |
-| strategy | Build your strategy: Discovery, CAB-P, 10 ciblages |
-| campaign | Run the pipeline and inject into Lemlist |
-| monitor | Track performance and optimize |
+| `/outbound-engine:setup` | Configure your API keys and create your client folder |
+| `/outbound-engine:strategy` | Build your strategy: Discovery, CAB-P, 10 ciblages |
+| `/outbound-engine:campaign` | Run the pipeline and inject into Lemlist |
+| `/outbound-engine:monitor` | Track performance and optimize |
 
 ## CLI Mode (power users)
 
@@ -46,6 +68,15 @@ python -m pipeline write  --campaign path/to/C04
 python -m pipeline inject --campaign path/to/C04 --lemlist-id cam_xxx
 ```
 
+## Required API Keys
+
+| Key | Where to get it |
+|-----|----------------|
+| `SCRAPINGDOG_API_KEY` | [scrapingdog.com](https://www.scrapingdog.com) — Google SERP API |
+| `RAPIDAPI_KEY` | [rapidapi.com](https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api) — LinkedIn profiles |
+| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) — Claude API |
+| `LEMLIST_API_KEY` | Lemlist → Settings → Integrations → API |
+
 ## Stack
 
 - Python 3.11+ (anthropic, aiohttp, typer, pyyaml, pydantic)
@@ -56,11 +87,17 @@ python -m pipeline inject --campaign path/to/C04 --lemlist-id cam_xxx
 ## Architecture
 
 ```
+.claude-plugin/  Plugin manifest
+skills/          4 skills (SKILL.md) — invocable via /outbound-engine:*
 agents/          4 Claude Code agents (.md) — conversational UX
 pipeline/        Python engine — silent execution
 templates/       Methodology guides + YAML/JSON examples
 clients/         Client data (gitignored)
 ```
+
+## Multi-language Support
+
+Each campaign has a `language` field in `campaign.yaml` that controls the copywriting language. Supported: `fr`, `en`, `de`, `es`, `nl`, `it`, and any custom language code.
 
 ---
 
