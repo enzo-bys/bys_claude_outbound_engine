@@ -17,11 +17,16 @@ Read `.env.local` and verify these 4 keys are present:
 - `ANTHROPIC_API_KEY`
 - `LEMLIST_API_KEY`
 
-If any keys are missing, guide the user:
-- Scrapingdog: https://www.scrapingdog.com (Google SERP API)
-- RapidAPI: https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api (LinkedIn profiles)
-- Anthropic: https://console.anthropic.com (Claude API)
-- Lemlist: Settings > Integrations > API inside Lemlist
+For EACH missing key, show the user the exact link with clear instructions:
+
+| Key | What it does | Sign up link | Where to find the key |
+|-----|-------------|-------------|----------------------|
+| `ANTHROPIC_API_KEY` | Powers the AI that writes emails | https://console.anthropic.com/account/keys | Console → API Keys → Create Key |
+| `LEMLIST_API_KEY` | Injects leads into Lemlist campaigns | https://app.lemlist.com/settings/integrations | Settings → Integrations → API → Copy Key |
+| `SCRAPINGDOG_API_KEY` | Finds Google news about leads' companies | https://api.scrapingdog.com/dashboard | Dashboard → Your API Key (top of page) |
+| `RAPIDAPI_KEY` | Enriches LinkedIn profiles | https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api | Subscribe → Copy `X-RapidAPI-Key` from code snippet |
+
+IMPORTANT: Always show CLICKABLE LINKS in a table so the user can open them directly.
 
 ### 2. Create the client folder
 
