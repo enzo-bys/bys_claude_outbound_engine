@@ -83,7 +83,7 @@ You need 4 API keys. Click each link to go directly to the right page:
 | 1 | `ANTHROPIC_API_KEY` | Powers the AI that writes your emails | **https://console.anthropic.com/account/keys** | Click "Create Key" → copy it |
 | 2 | `LEMLIST_API_KEY` | Sends campaigns via Lemlist | **https://app.lemlist.com/settings/integrations** | Scroll to API section → copy key |
 | 3 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads | **https://api.scrapingdog.com/dashboard** | Your API key is at the top of the dashboard |
-| 4 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api** | Subscribe (free) → copy `X-RapidAPI-Key` from any code snippet |
+| 4 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **[https://rapidapi.com](https://rapidapi.com/pnd-team-pnd-team/api/professional-network-data/playground)** | Subscribe (free) → copy `X-RapidAPI-Key` from any code snippet |
 
 ---
 
