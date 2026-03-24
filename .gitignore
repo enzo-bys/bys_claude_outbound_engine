@@ -1,0 +1,25 @@
+# Secrets
+.env.local
+.env
+
+# Client data (private)
+clients/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vscode/
+
+# Claude local settings
+.claude/settings.local.json
+
+# OS
+.DS_Store
+
+# Firecrawl cache
+.firecrawl/

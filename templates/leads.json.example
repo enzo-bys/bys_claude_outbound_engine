@@ -1,0 +1,9 @@
+[
+  {
+    "firstName": "Marie",
+    "lastName": "Dupont",
+    "companyName": "Acme SAS",
+    "email": "marie@acme.fr",
+    "linkedinUrl": "https://linkedin.com/in/mariedupont"
+  }
+]
