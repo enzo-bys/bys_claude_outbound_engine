@@ -1,4 +1,4 @@
-"""BYS Outbound Pipeline CLI.
+"""Outbound Pipeline CLI.
 
 Usage:
     python -m pipeline enrich --campaign path/to/C04
@@ -19,8 +19,8 @@ from typing import Optional
 import typer
 
 app = typer.Typer(
-    name="bys-pipeline",
-    help="BYS Outbound Pipeline: enrich, write, inject, batch run.",
+    name="outbound-pipeline",
+    help="Outbound Pipeline — Built by BuildYourSales.tech",
     no_args_is_help=True,
 )
 

@@ -1,64 +1,64 @@
-# Guide CAB-P
+# CAB-P Guide
 
-> Etape 2 du workflow BYS. A partir du discovery, construire le tableau Caracteristiques-Avantages-Benefices-Pains.
-
----
-
-## Objectif
-
-Transformer les informations du discovery en une matrice structuree qui relie l'offre du client aux douleurs de ses prospects. Cette matrice sert de fondation pour les 10 ciblages.
+> Step 2 of the workflow. From the discovery, build the Characteristics-Advantages-Benefits-Pains matrix.
 
 ---
 
-## Tableau CAB-P
+## Objective
 
-A partir du discovery, remplir ce tableau :
+Transform the discovery information into a structured matrix that connects the client's offer to their prospects' pain points. This matrix serves as the foundation for the 10 ciblages.
 
-| Offre | Caracteristiques | Avantages | Benefices | Pains cibles |
-|-------|------------------|-----------|-----------|--------------|
-| ...   | ...              | ...       | ...       | ...          |
+---
+
+## CAB-P Table
+
+From the discovery, fill in this table:
+
+| Offer | Characteristics | Advantages | Benefits | Target Pains |
+|-------|----------------|------------|----------|--------------|
+| ...   | ...            | ...        | ...      | ...          |
 
 ### Definitions
 
-- **Caracteristiques** : ce que le produit/service fait concretement (features, specs)
-- **Avantages** : en quoi c'est mieux que l'alternative (differentiation)
-- **Benefices** : l'impact business pour le prospect (ROI, temps gagne, risque reduit)
-- **Pains cibles** : les douleurs specifiques que ca resout (ce qui empeche le prospect de dormir)
+- **Characteristics**: what the product/service concretely does (features, specs)
+- **Advantages**: why it is better than the alternative (differentiation)
+- **Benefits**: the business impact for the prospect (ROI, time saved, risk reduced)
+- **Target Pains**: the specific pain points it solves (what keeps the prospect up at night)
 
 ---
 
-## Flow de raisonnement
+## Reasoning flow
 
 ```
-Offre -> Benefices -> Pains -> Types d'entreprises cibles
+Offer -> Benefits -> Pains -> Types of target companies
 ```
 
-1. Partir de l'offre et ses caracteristiques
-2. En deduire les benefices business concrets
-3. Identifier les pains que ces benefices resolvent
-4. Determiner quels types d'entreprises souffrent de ces pains
+1. Start from the offer and its characteristics
+2. Derive the concrete business benefits
+3. Identify the pains these benefits solve
+4. Determine which types of companies suffer from these pains
 
 ---
 
 ## Validation
 
-Le CAB-P DOIT etre valide par le client avant de passer aux ciblages. Envoyer le tableau et demander :
-- Est-ce que les pains sont bien formules ?
-- Y a-t-il des benefices manquants ?
-- Les caracteristiques sont-elles a jour ?
+The CAB-P MUST be validated by the client before moving to ciblages. Send the table and ask:
+- Are the pains well formulated?
+- Are there any missing benefits?
+- Are the characteristics up to date?
 
 ---
 
 ## Output
 
-Fichier `cab-p.md` dans le dossier client, contenant :
-- Le tableau CAB-P complet
-- Les notes de validation du client
+File `cab-p.md` in the client folder, containing:
+- The complete CAB-P table
+- Client validation notes
 
 ---
 
-## Regles
+## Rules
 
-- Ne JAMAIS passer aux ciblages sans validation client du CAB-P
-- Les pains doivent etre formules du point de vue du prospect, pas du vendeur
-- Privilegier les benefices business (revenus, couts, temps) aux benefices techniques
+- NEVER move to ciblages without client validation of the CAB-P
+- Pains must be formulated from the prospect's point of view, not the seller's
+- Prioritize business benefits (revenue, costs, time) over technical benefits

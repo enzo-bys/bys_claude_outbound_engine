@@ -1,11 +1,11 @@
-"""BYS base prompts (immutable) + dynamic composition from client context."""
+"""Base prompts (immutable) + dynamic composition from client context."""
 
 from __future__ import annotations
 from pipeline.models import CampaignContext
 
 
 # ---------------------------------------------------------------------------
-# BYS Base Prompts (immutable — these never change between clients)
+# Base Prompts (immutable — these never change between clients)
 # ---------------------------------------------------------------------------
 
 ANALYST_BASE = """Tu es un analyste de leads B2B. Ton role est de comprendre QUI est cette personne et CE QUE VIT sa boite.
@@ -124,10 +124,10 @@ Si le total est < 7, donne un feedback PRECIS et ACTIONNABLE pour ameliorer."""
 
 
 # ---------------------------------------------------------------------------
-# BYS Banned Words (immutable defaults)
+# Default Banned Words (immutable defaults)
 # ---------------------------------------------------------------------------
 
-BYS_BANNED_WORDS: dict[str, str] = {
+DEFAULT_BANNED_WORDS: dict[str, str] = {
     "outbound": "prospection",
     "pipe": "flux de prospects",
     "pipeline": "processus",
@@ -162,8 +162,8 @@ def _inject_context(base: str, ctx: CampaignContext) -> str:
             rules = "\n".join(f"- {r}" for r in cfg.custom_rules)
             parts.append(f"\n\n## REGLES SPECIFIQUES\n{rules}")
 
-        # Merge BYS banned words + campaign banned words
-        all_banned = list(BYS_BANNED_WORDS.keys()) + cfg.banned_words
+        # Merge default banned words + campaign banned words
+        all_banned = list(DEFAULT_BANNED_WORDS.keys()) + cfg.banned_words
         if all_banned:
             words = "\n".join(f"- {w}" for w in all_banned)
             parts.append(f"\n\n## MOTS INTERDITS\n{words}")
@@ -175,34 +175,48 @@ def _inject_context(base: str, ctx: CampaignContext) -> str:
         if "call" in cfg.channels:
             parts.append("\n\nSi le canal 'call' est actif, genere aussi un callScript : texte court (5-8 phrases) avec accroche, contexte, question ouverte. Meme ton conversationnel.")
 
-    # Add geo-specific rules
+    # Add language instruction from language field
+    if cfg and cfg.language:
+        lang = cfg.language.lower()
+        if lang == "fr":
+            parts.append("\n\nEcris en francais naturel. Vouvoiement.")
+        elif lang == "en":
+            parts.append("\n\nWrite in English. Professional but casual.")
+        elif lang == "de":
+            parts.append("\n\nSchreib auf Deutsch. Siezen.")
+        elif lang == "es":
+            parts.append("\n\nEscribe en espanol. Usted.")
+        elif lang == "nl":
+            parts.append("\n\nSchrijf in het Nederlands. U-vorm.")
+        elif lang == "it":
+            parts.append("\n\nScrivi in italiano. Dare del Lei.")
+        else:
+            parts.append(f"\n\nWrite in {cfg.language}.")
+
+    # Add geo-specific cultural rules (separate from language)
     if cfg and cfg.geo:
         geo = cfg.geo.lower()
-        if geo in ("fr", "france"):
-            parts.append("\n\nFrancais naturel. Vouvoiement.")
-        elif geo in ("be", "belgique"):
-            parts.append("\n\nFrancais naturel. Vouvoiement. Pas de references franco-francaises.")
-        elif geo in ("us", "uk", "en"):
-            parts.append("\n\nEnglish. Professional but casual.")
+        if geo in ("be", "belgique"):
+            parts.append("\n\nPas de references franco-francaises.")
 
     return "\n".join(parts)
 
 
 def build_analyst_prompt(ctx: CampaignContext) -> str:
-    """Compose analyst system prompt from BYS base + client context."""
+    """Compose analyst system prompt from base + client context."""
     return _inject_context(ANALYST_BASE, ctx)
 
 
 def build_strategist_prompt(ctx: CampaignContext) -> str:
-    """Compose strategist system prompt from BYS base + client context."""
+    """Compose strategist system prompt from base + client context."""
     return _inject_context(STRATEGIST_BASE, ctx)
 
 
 def build_copywriter_prompt(ctx: CampaignContext) -> str:
-    """Compose copywriter system prompt from BYS base + client context."""
+    """Compose copywriter system prompt from base + client context."""
     return _inject_context(COPYWRITER_BASE, ctx)
 
 
 def build_reviewer_prompt(ctx: CampaignContext) -> str:
-    """Compose reviewer system prompt from BYS base + client context."""
+    """Compose reviewer system prompt from base + client context."""
     return _inject_context(REVIEWER_BASE, ctx)

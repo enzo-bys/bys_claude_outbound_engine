@@ -1,51 +1,51 @@
-# Guide Discovery
+# Discovery Guide
 
-> Etape 1 du workflow BYS. OBLIGATOIRE avant tout ciblage.
-
----
-
-## Objectif
-
-Collecter toutes les informations necessaires sur le client pour construire une strategie de prospection pertinente. Aucune etape suivante ne peut commencer sans discovery complete.
+> Step 1 of the workflow. MANDATORY before any targeting.
 
 ---
 
-## Questions a poser
+## Objective
 
-Poser ces questions au client et ne pas avancer tant qu'on n'a pas les reponses :
-
-1. URL du site web de la boite
-2. URL LinkedIn de la boite
-3. Autres URLs utiles (Crunchbase, blog, cas clients, landing pages)
-4. Description de l'offre en 2-3 phrases
-5. Qui sont vos clients aujourd'hui ? (secteurs, tailles, geos)
-6. Quel est votre panier moyen / ACV ?
-7. Avez-vous des cas clients / temoignages a utiliser ?
-8. Quels sont vos concurrents directs ?
-9. Quels pays cibler ? (obligatoire -- conditionne la langue, le ton et les regles legales)
-10. Y a-t-il des exclusions ? (clients existants, concurrents, secteurs)
+Collect all necessary information about the client to build a relevant prospecting strategy. No subsequent step can begin without a complete discovery.
 
 ---
 
-## Enrichissement automatique
+## Questions to ask
 
-Apres les reponses du client, scraper :
-- Le site web (Firecrawl / Scrapingdog) pour completer les infos manquantes
-- Le LinkedIn de la boite (RapidAPI) pour le headcount, les posts recents, les decision makers
+Ask these questions to the client and do not proceed until all answers are received:
+
+1. Company website URL
+2. Company LinkedIn URL
+3. Other useful URLs (Crunchbase, blog, case studies, landing pages)
+4. Offer description in 2-3 sentences
+5. Who are your current clients? (industries, sizes, geos)
+6. What is your average deal size / ACV?
+7. Do you have any client case studies / testimonials to use?
+8. Who are your direct competitors?
+9. Which countries to target? (mandatory -- determines language, tone, and legal rules)
+10. Are there any exclusions? (existing clients, competitors, industries)
+
+---
+
+## Automatic enrichment
+
+After the client's answers, scrape:
+- The website (Firecrawl / Scrapingdog) to fill in any missing information
+- The company LinkedIn (RapidAPI) for headcount, recent posts, and decision makers
 
 ---
 
 ## Output
 
-Fichier `discovery.md` dans le dossier client, contenant :
-- Toutes les reponses aux 10 questions
-- Les donnees enrichies depuis le scraping
-- Les URLs sources
+File `discovery.md` in the client folder, containing:
+- All answers to the 10 questions
+- Enriched data from scraping
+- Source URLs
 
 ---
 
-## Regles
+## Rules
 
-- Ne JAMAIS inventer de reponses -- si l'info manque, la demander
-- Ne JAMAIS avancer a l'etape CAB-P sans discovery complete
-- Le pays cible (question 9) est critique : il conditionne la langue, le ton et les regles legales de toute la campagne
+- NEVER invent answers -- if information is missing, ask for it
+- NEVER proceed to the CAB-P step without a complete discovery
+- The target country (question 9) is critical: it determines the language, tone, and legal rules for the entire campaign

@@ -1,4 +1,4 @@
-"""Configuration and API keys for the BYS pipeline."""
+"""Configuration and API keys for the outbound pipeline — BuildYourSales.tech"""
 
 import os
 from pathlib import Path
@@ -36,4 +36,4 @@ MAX_RETRIES = 3
 RETRY_BACKOFF_BASE = 2.0     # Exponential backoff: 2s, 4s, 8s
 
 # Logging
-LOG_PREFIX = "[BYS:Pipeline]"
+LOG_PREFIX = "[Pipeline]"

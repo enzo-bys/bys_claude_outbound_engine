@@ -4,7 +4,7 @@ from __future__ import annotations
 import re
 
 from pipeline.models import CampaignConfig
-from pipeline.prompts import BYS_BANNED_WORDS
+from pipeline.prompts import DEFAULT_BANNED_WORDS
 from pipeline.utils import log
 
 
@@ -18,9 +18,9 @@ TEXT_FIELDS = [
 
 
 def replace_banned_words(text: str, campaign_banned: list[str] | None = None) -> str:
-    """Replace BYS banned words + campaign-specific banned words."""
+    """Replace default banned words + campaign-specific banned words."""
     result = text
-    for word, replacement in BYS_BANNED_WORDS.items():
+    for word, replacement in DEFAULT_BANNED_WORDS.items():
         pattern = re.compile(re.escape(word), re.IGNORECASE)
         result = pattern.sub(replacement, result)
     # Campaign-specific banned words (no replacement, just flag)

@@ -1,4 +1,4 @@
-"""Data models for the BYS pipeline."""
+"""Data models for the outbound pipeline."""
 
 from __future__ import annotations
 from dataclasses import dataclass, field, asdict
@@ -148,6 +148,7 @@ class CampaignConfig(BaseModel):
     signal: str = ""
     persona: str = ""
     geo: str = ""
+    language: str = "fr"
     status: str = "draft"
     channels: list[str] = PydField(default_factory=lambda: ["email", "linkedin"])
     tone: str = "conversationnel, pair-a-pair, curieux"
@@ -257,4 +258,4 @@ class CampaignContext:
         )
 
 
-LOG_PREFIX = "[BYS:Pipeline]"
+LOG_PREFIX = "[Pipeline]"

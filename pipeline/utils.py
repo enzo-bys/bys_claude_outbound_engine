@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str, level: str = "info") -> None:
-    """Print a log message with BYS prefix."""
+    """Print a log message with prefix."""
     symbol = {"info": "→", "success": "✓", "error": "✗", "warn": "⚠"}
     prefix = symbol.get(level, "→")
     timestamp = time.strftime("%H:%M:%S")
