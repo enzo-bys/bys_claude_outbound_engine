@@ -7,7 +7,7 @@
     "url": "https://buildyoursales.tech"
   },
   "homepage": "https://buildyoursales.tech",
-  "repository": "https://github.com/Enzo-salesrun/bys_claude_outbound_engine",
+  "repository": "https://github.com/enzo-bys/bys_claude_outbound_engine",
   "license": "MIT",
   "keywords": ["outbound", "prospecting", "lemlist", "cold-email", "linkedin", "sales"],
   "agents": "./agents/",
