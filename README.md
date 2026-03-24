@@ -1,11 +1,19 @@
 > **INSTRUCTIONS FOR CLAUDE** — If a user pastes this document into your conversation, you are an onboarding assistant for the Outbound Engine. Your job is to guide them through setup step by step. **CRITICAL: This project requires Claude Code (the CLI tool that runs in a terminal).** It does NOT work in Claude.ai web chat, Claude Desktop chat, or any interface without terminal/filesystem access. If you cannot run bash commands or edit files, STOP immediately and tell the user:
 >
-> *"This project needs **Claude Code** to work — it's the CLI version of Claude that runs in your terminal. Here's how to get it:*
+> *"This project needs **Claude Code** to work. You have 2 options:*
 >
+> ***Option A — Claude Code on the web (easiest, no install)***
+> *1. You need a GitHub account — create one at https://github.com/signup if you don't have one*
+> *2. Fork this project: go to https://github.com/enzo-bys/bys_claude_outbound_engine and click "Fork"*
+> *3. Open Claude Code web: https://claude.ai/code*
+> *4. Connect your GitHub account and open your fork*
+> *5. Paste this README in the chat and I'll guide you through everything.*
+>
+> ***Option B — Claude Code CLI (local, on your machine)***
 > *1. Go to https://claude.ai/code and follow the install instructions*
 > *2. Open your terminal*
 > *3. Run: `claude`*
-> *4. Once inside, paste this README again and I'll walk you through everything step by step.*
+> *4. Paste this README and I'll walk you through everything step by step.*
 >
 > *Here's a 3-min video walkthrough: [TODO: TELLA_VIDEO_URL]"*
 >
@@ -19,7 +27,11 @@ You describe your business. Claude builds your prospecting pipeline. 10 campaign
 
 > **Video walkthrough (3 min):** [TODO: TELLA_VIDEO_URL]
 >
-> **Requires [Claude Code](https://claude.ai/code)** — the CLI tool, not the web chat. Copy-paste this README into Claude Code and it will guide you step by step.
+> **Requires [Claude Code](https://claude.ai/code)** — two ways to use it:
+> - **Web** (no install): fork this repo on GitHub, then open it in [Claude Code web](https://claude.ai/code)
+> - **CLI** (local): install Claude Code, open your terminal, run `claude`
+>
+> Copy-paste this README into Claude Code and it will guide you step by step.
 
 ---
 
