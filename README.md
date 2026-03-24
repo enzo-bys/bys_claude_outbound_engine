@@ -4,6 +4,29 @@ Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude.
 
 **You describe your business. Claude builds your prospecting strategy. The engine writes personalized emails and injects them into Lemlist. That's it.**
 
+<!--
+INSTRUCTIONS FOR CLAUDE:
+If a user pastes this README into your conversation, it means they want to use the Outbound Engine.
+Follow these steps IN ORDER. Do ONE step at a time. Wait for the user's response before moving on.
+
+STEP 1: Help them install the project (clone + pip install)
+STEP 2: Help them get their 4 API keys (give exact links from the table below)
+STEP 3: Help them create .env.local with their keys
+STEP 4: Tell them to launch Claude Code with: claude --plugin-dir .
+STEP 5: Once inside, run /outbound-engine:setup to create their client
+STEP 6: Run /outbound-engine:strategy to build Discovery + CAB-P + 10 campaigns
+STEP 7: Once leads are added, run /outbound-engine:campaign to launch the pipeline
+STEP 8: Run /outbound-engine:monitor to track performance
+
+IMPORTANT RULES:
+- Ask ONE question at a time. Never dump all steps at once.
+- Always show CLICKABLE LINKS for API keys, not just "go to scrapingdog.com"
+- If the user seems lost, simplify. Explain like they've never used a terminal.
+- If they already have the project installed, skip to the step they need.
+- The methodology files are in templates/methodo/ — read them if you need context.
+- The Python pipeline is in pipeline/ — you can run commands with python -m pipeline.
+-->
+
 ---
 
 ## What does this do?
@@ -35,118 +58,145 @@ Before you start, you need:
 
 ## Step 1 — Download the engine
 
-Open your terminal and run:
+Open your terminal and run these 3 commands:
 
 ```bash
 git clone https://github.com/enzo-bys/bys_claude_outbound_engine.git
+```
+```bash
 cd bys_claude_outbound_engine
+```
+```bash
 pip install -r requirements.txt
 ```
 
-> **Don't have git?** You can also download the ZIP from the GitHub page and unzip it.
+> **Don't have git?** Download the ZIP from https://github.com/enzo-bys/bys_claude_outbound_engine and unzip it.
 
 ---
 
-## Step 2 — Get your API keys
+## Step 2 — Get your 4 API keys
 
-You need 4 API keys. Here's where to get each one:
+You need 4 API keys. Click each link to go directly to the right page:
 
-| Key | What it does | Where to get it | Free tier? |
-|-----|-------------|----------------|------------|
-| `ANTHROPIC_API_KEY` | Powers the AI that writes your emails | [console.anthropic.com](https://console.anthropic.com) | $5 free credit |
-| `LEMLIST_API_KEY` | Sends your campaigns | Lemlist app → Settings → Integrations → API | Included in plan |
-| `SCRAPINGDOG_API_KEY` | Finds Google news about your leads' companies | [scrapingdog.com](https://www.scrapingdog.com) | 1000 free credits |
-| `RAPIDAPI_KEY` | Enriches LinkedIn profiles | [rapidapi.com/linkedin-data-api](https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api) | 100 free requests |
+| # | Key | What it does | Get it here | How to find it |
+|---|-----|-------------|-------------|---------------|
+| 1 | `ANTHROPIC_API_KEY` | Powers the AI that writes your emails | **https://console.anthropic.com/account/keys** | Click "Create Key" → copy it |
+| 2 | `LEMLIST_API_KEY` | Sends campaigns via Lemlist | **https://app.lemlist.com/settings/integrations** | Scroll to API section → copy key |
+| 3 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads | **https://api.scrapingdog.com/dashboard** | Your API key is at the top of the dashboard |
+| 4 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **https://rapidapi.com/rockapis-rockapis-default/api/linkedin-data-api** | Subscribe (free) → copy `X-RapidAPI-Key` from any code snippet |
 
-Once you have them, copy the example file and paste your keys:
+---
+
+## Step 3 — Save your API keys
+
+Run this command to create your config file:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Open `.env.local` in any text editor and fill in your keys:
+Then open `.env.local` with any text editor and paste your 4 keys:
 
 ```
-SCRAPINGDOG_API_KEY=your_key_here
-RAPIDAPI_KEY=your_key_here
-ANTHROPIC_API_KEY=your_key_here
-LEMLIST_API_KEY=your_key_here
+ANTHROPIC_API_KEY=sk-ant-...
+LEMLIST_API_KEY=...
+SCRAPINGDOG_API_KEY=...
+RAPIDAPI_KEY=...
 ```
+
+Save the file.
 
 ---
 
-## Step 3 — Launch Claude Code with the plugin
+## Step 4 — Launch
+
+From inside the project folder, run:
 
 ```bash
 claude --plugin-dir .
 ```
 
-That's it. Claude now has access to the outbound engine.
+Claude Code will start with the outbound engine plugin loaded. Accept the trust prompt.
 
 ---
 
-## Step 4 — Create your first campaign
+## Step 5 — Set up your account
 
-Just type this in Claude Code:
+Type this in Claude Code:
 
 ```
 /outbound-engine:setup
 ```
 
-Claude will:
-- Check that your API keys are working
-- Ask for your company name, sender name, email, and budget
-- Create your client folder
+**What happens:** Claude checks your API keys, asks for your company info (name, sender, budget), and creates your client folder.
 
-Then:
+---
+
+## Step 6 — Build your strategy
 
 ```
 /outbound-engine:strategy
 ```
 
-Claude will:
-- Ask you 9 questions about your business (one at a time, don't worry)
-- Build your CAB-P matrix
-- Propose 10 targeted campaigns
-- Ask what language each campaign should be written in
+**What happens:** Claude asks you 9 questions about your business, one at a time:
+1. Your website URL
+2. Your LinkedIn URL
+3. What you sell (2-3 sentences)
+4. Who your clients are
+5. Your average deal size
+6. Case studies you have
+7. Your competitors
+8. Target countries
+9. Any exclusions
 
-Then add your leads (a JSON file per campaign) and run:
+Then it builds your **CAB-P matrix** (what pains your offer solves) and proposes **10 targeted campaigns**, each with a specific signal, persona, geography, and language.
+
+---
+
+## Step 7 — Add your leads and launch
+
+Add a `leads.json` file in each campaign folder. Minimum format:
+
+```json
+[
+  {
+    "firstName": "Marie",
+    "lastName": "Dupont",
+    "companyName": "Acme SAS",
+    "email": "marie@acme.com",
+    "linkedinUrl": "https://linkedin.com/in/marie-dupont"
+  }
+]
+```
+
+Then run:
 
 ```
 /outbound-engine:campaign
 ```
 
-Claude will:
-- Validate your leads
-- Enrich them (LinkedIn + Google)
-- Write personalized emails for each lead
-- Inject everything into Lemlist
+**What happens:** Claude validates your leads, enriches them (LinkedIn + Google news), writes personalized emails for each one, and injects everything into Lemlist.
 
 ---
 
-## Step 5 — Track performance
-
-Once your campaigns are live:
+## Step 8 — Track and optimize
 
 ```
 /outbound-engine:monitor
 ```
 
-Claude will pull your Lemlist stats and tell you:
-- Which campaigns are performing
-- Which ones need adjustment
-- What to change and why
+**What happens:** Claude pulls your Lemlist stats (open rate, reply rate, bounce rate) and tells you which campaigns need adjustment and what to change.
 
 ---
 
-## The 4 skills at a glance
+## Summary
 
-| Step | Skill | What happens |
-|------|-------|-------------|
-| 1 | `/outbound-engine:setup` | API keys + client folder |
-| 2 | `/outbound-engine:strategy` | Discovery + CAB-P + 10 campaigns |
-| 3 | `/outbound-engine:campaign` | Enrich + write + inject into Lemlist |
-| 4 | `/outbound-engine:monitor` | Stats + optimization |
+| Step | What you type | What happens |
+|------|--------------|-------------|
+| 5 | `/outbound-engine:setup` | API keys check + client folder |
+| 6 | `/outbound-engine:strategy` | 9 questions + CAB-P + 10 campaigns |
+| 7 | `/outbound-engine:campaign` | Enrich leads + write emails + inject Lemlist |
+| 8 | `/outbound-engine:monitor` | Stats + recommendations |
 
 ---
 
@@ -162,7 +212,7 @@ French, English, German, Spanish, Dutch, Italian, and any other language you spe
 About $0.05/lead with Claude Sonnet, $0.35/lead with Claude Opus. A 10-campaign batch with 40 leads each costs roughly $20.
 
 **Can I use it without Lemlist?**
-Yes. Run with `--dry-run` flag and the engine will generate the emails without injecting. You'll find them in `emails.json` in each campaign folder.
+Yes. Run with `--dry-run` and the engine generates emails without injecting. Find them in `emails.json` in each campaign folder.
 
 **What format do my leads need to be in?**
 A JSON file with at minimum: `firstName`, `lastName`, `companyName`. Add `email` and `linkedinUrl` for best results. See `templates/leads.json.example`.
