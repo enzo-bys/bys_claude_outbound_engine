@@ -139,15 +139,27 @@ Save the file.
 
 ---
 
-## Step 4 — Launch
+## Step 4 — Install the plugin
 
-From inside the project folder, run:
+You have two options:
+
+### Option A — Install as a Claude Code plugin (recommended)
+
+```bash
+claude plugin add --from https://github.com/enzo-bys/bys_claude_outbound_engine
+```
+
+This installs the plugin globally. You can then use it from any directory — just run `claude` and the skills are available.
+
+### Option B — Run locally from the project folder
 
 ```bash
 claude --plugin-dir .
 ```
 
-Claude Code will start with the outbound engine plugin loaded. Accept the trust prompt.
+This loads the plugin only for the current session, from the local folder.
+
+Either way, accept the trust prompt when Claude asks.
 
 ---
 
