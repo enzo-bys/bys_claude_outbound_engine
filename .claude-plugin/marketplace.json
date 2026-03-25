@@ -1,7 +1,5 @@
 {
-  "schema_version": "1.0",
   "name": "bys-outbound-engine",
-  "display_name": "BYS Outbound Engine",
   "description": "Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude + Lemlist",
   "owner": {
     "name": "BuildYourSales",
@@ -10,11 +8,10 @@
   "plugins": [
     {
       "name": "outbound-engine",
-      "version": "1.0.0",
       "description": "Ultra-targeted outbound micro-campaigns from a human brief, powered by Claude + Lemlist",
-      "path": ".",
-      "agents": "./agents/",
-      "skills": "./skills/"
+      "source": "./",
+      "version": "1.0.0",
+      "homepage": "https://github.com/enzo-bys/bys_claude_outbound_engine"
     }
   ]
 }
