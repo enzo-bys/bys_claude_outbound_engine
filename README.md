@@ -20,19 +20,40 @@
 
 **Build Your Sales** | Version 2.0 | Mars 2026
 
-You describe your business. Claude builds your prospecting pipeline. Up to 10 campaigns, 400 leads, personalized emails — injected into Lemlist in one session.
+Tu decris ton business. Claude construit ton pipeline de prospection. Jusqu'a 10 campagnes, 400 leads, emails personnalises — injectes dans Lemlist en une seule session.
 
-> **Requires [Claude Code CLI](https://claude.ai/code)** — install it, clone this repo, and paste this README into Claude Code. It guides you step by step.
+> **Necessite [Claude Code CLI](https://claude.ai/code)** — installe-le, clone ce repo, et colle ce README dans Claude Code. Il te guide etape par etape.
 >
-> **Video walkthrough (3 min):** https://youtu.be/Foou3pCHXIM
+> **Video walkthrough (3 min) :** https://youtu.be/Foou3pCHXIM
 
 ---
 
-## What does this do?
+## Vue d'ensemble
+
+| Etape | Action | Resultat |
+|-------|--------|----------|
+| 1 | Installer Claude Code CLI | Terminal pret |
+| 2 | Fork + clone le repo GitHub | Projet en local |
+| 3 | Creer les 3 cles API (Anthropic + Scrapingdog + RapidAPI) | Enrichissement active |
+| 4 | Sauvegarder les cles dans `.env.local` | Config prete |
+| 5 | Connecter le Lemlist MCP | Claude parle directement a Lemlist |
+| 6 | Installer le plugin | Moteur charge |
+| 7 | `/outbound-engine:setup` | Dossier client cree |
+| 8 | `/outbound-engine:strategy` | Matrice CAB-P + 10 campagnes |
+| 9 | Sourcer ou importer les leads | Leads prets |
+| 10 | `/outbound-engine:campaign` | Enrichissement + emails + injection Lemlist |
+| 11 | Finaliser dans Lemlist | Campagnes pretes a envoyer |
+| 12 | `/outbound-engine:monitor` | Stats + optimisations |
+
+> **Temps reel :** 45-60 min la premiere fois (installation), 15 min les fois suivantes.
+>
+> **Cout estime :** ~0,05$/lead avec Claude Sonnet. 400 leads = environ 20$ de tokens Anthropic.
+
+---
+
+## Ce que l'outil fait automatiquement
 
 L'Outbound Engine est un plugin Claude Code developpe par Enzo Luciano-Marty (Build Your Sales) qui connecte Claude directement a Lemlist. Tu decris ton business, il genere des campagnes de prospection B2B completes.
-
-**Ce que l'outil fait automatiquement :**
 
 1. Pose 9 questions sur ton offre, tes clients, tes concurrents
 2. Construit une matrice CAB-P (Caracteristiques, Avantages, Benefices, Douleurs)
@@ -44,25 +65,21 @@ L'Outbound Engine est un plugin Claude Code developpe par Enzo Luciano-Marty (Bu
 
 Chaque campagne recoit 30-50 leads. Les emails sont rediges dans la langue de ton choix (francais, anglais, allemand, espagnol...).
 
-> **Temps reel :** 45-60 min la premiere fois (installation), 15 min les fois suivantes une fois tout configure.
->
-> **Cout estime :** ~0,05$/lead avec Claude Sonnet. 400 leads = environ 20$ de tokens Anthropic.
+---
+
+## Prerequis
+
+Avant de commencer, tu as besoin de :
+
+- **Un abonnement Claude Max (ou Pro)**
+- **Un compte GitHub** — [creer un compte ici](https://github.com/signup) si tu n'en as pas
+- **Un compte Lemlist** avec un abonnement actif
+- **~20$ de credits API Anthropic** — [ajouter des credits](https://console.anthropic.com/billing)
+- **Une infrastructure de delivrabilite prete** (voir la section dediee ci-dessous)
 
 ---
 
-## Prerequisites
-
-Before you start, you need:
-
-- **A Claude Max (or Pro) subscription**
-- **A GitHub account** — [create one here](https://github.com/signup) if you don't have one
-- **A Lemlist account** with an active subscription
-- **~20$ of Anthropic API credits** — [add credits here](https://console.anthropic.com/billing)
-- **A deliverability infrastructure ready** (see the dedicated section below)
-
----
-
-## Before anything: deliverability
+## Avant tout : la delivrabilite
 
 C'est l'etape que tout le monde oublie et qui tue les resultats. Envoyer 400 emails depuis des inboxes froides ou mal configurees = blacklist garantie. Avant de lancer une seule campagne, ton infrastructure doit etre en place.
 
@@ -86,68 +103,68 @@ C'est l'etape que tout le monde oublie et qui tue les resultats. Envoyer 400 ema
 
 ## Installation
 
-### Step 1 — Install Claude Code CLI
+### Etape 1 — Installer Claude Code CLI
 
-Open your Terminal (Mac: CMD + Space -> "Terminal" -> Enter) and run:
+Ouvre ton Terminal (Mac : CMD + Espace -> "Terminal" -> Entree) et lance :
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | sh
 ```
 
-Then configure your PATH:
+Configure le PATH :
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
 
-Launch Claude Code:
+Lance Claude Code :
 
 ```bash
 claude
 ```
 
-Select "Claude account with subscription" and log in.
+Selectionne "Claude account with subscription" et connecte-toi.
 
-### Step 2 — Fork and clone the repo
+### Etape 2 — Fork et clone le repo
 
-1. Go to [github.com/enzo-bys/bys_claude_outbound_engine](https://github.com/enzo-bys/bys_claude_outbound_engine)
-2. Click **"Fork"** in the top right corner, then **"Create fork"**
-3. Clone your fork:
+1. Va sur [github.com/enzo-bys/bys_claude_outbound_engine](https://github.com/enzo-bys/bys_claude_outbound_engine)
+2. Clique sur **"Fork"** en haut a droite, puis **"Create fork"**
+3. Clone ton fork :
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bys_claude_outbound_engine.git
+git clone https://github.com/TON_USERNAME/bys_claude_outbound_engine.git
 cd bys_claude_outbound_engine
 ```
 
-4. Install Python dependencies:
+4. Installe les dependances Python :
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> **Don't have git?** Download the ZIP from GitHub and unzip it.
+> **Pas de git ?** Telecharge le ZIP depuis GitHub et dezippe-le.
 >
-> **Don't have Python?** Download it from [python.org/downloads](https://www.python.org/downloads/). Mac: `brew install python`.
+> **Pas de Python ?** Telecharge-le depuis [python.org/downloads](https://www.python.org/downloads/). Mac : `brew install python`.
 >
-> **Don't have Node.js?** You'll need it for the Lemlist MCP. Download from [nodejs.org](https://nodejs.org) (LTS version).
+> **Pas de Node.js ?** Tu en auras besoin pour le Lemlist MCP. Telecharge depuis [nodejs.org](https://nodejs.org) (version LTS).
 
-### Step 3 — Get your 3 enrichment API keys
+### Etape 3 — Obtenir tes 3 cles API d'enrichissement
 
-| # | Key | What it does | Get it here | How to find it |
-|---|-----|-------------|-------------|---------------|
-| 1 | `ANTHROPIC_API_KEY` | Powers the AI that writes your emails | **[console.anthropic.com/account/keys](https://console.anthropic.com/account/keys)** | Click "Create Key" -> copy it. Then go to Billing and add minimum 20$ of credits. |
-| 2 | `SCRAPINGDOG_API_KEY` | Finds Google news about leads | **[api.scrapingdog.com/dashboard](https://api.scrapingdog.com/dashboard)** | Create a free account -> API key is at the top of the dashboard |
-| 3 | `RAPIDAPI_KEY` | Enriches LinkedIn profiles | **[rapidapi.com/.../professional-network-data](https://rapidapi.com/pnd-team-pnd-team/api/professional-network-data/playground)** | Subscribe (free plan) -> copy `X-RapidAPI-Key` from the right panel |
+| # | Cle | A quoi elle sert | Ou la trouver | Comment faire |
+|---|-----|-----------------|---------------|---------------|
+| 1 | `ANTHROPIC_API_KEY` | Alimente l'IA qui ecrit tes emails | **[console.anthropic.com/account/keys](https://console.anthropic.com/account/keys)** | Clique "Create Key" -> copie-la. Va dans Billing et ajoute minimum 20$ de credits. |
+| 2 | `SCRAPINGDOG_API_KEY` | Trouve les news Google sur tes leads | **[api.scrapingdog.com/dashboard](https://api.scrapingdog.com/dashboard)** | Cree un compte gratuit -> la cle API est en haut du dashboard |
+| 3 | `RAPIDAPI_KEY` | Enrichit les profils LinkedIn | **[rapidapi.com/.../professional-network-data](https://rapidapi.com/pnd-team-pnd-team/api/professional-network-data/playground)** | Clique "Subscribe to Test" (plan gratuit) -> copie `X-RapidAPI-Key` dans le panneau de droite |
 
-> Without Anthropic credits, lead enrichment will not work.
+> Sans credits Anthropic, l'enrichissement des leads ne fonctionnera pas.
 
-### Step 4 — Save your API keys
+### Etape 4 — Sauvegarder tes cles API
 
 ```bash
 cp .env.example .env.local
 ```
 
-Then open `.env.local` and paste your keys:
+Ouvre `.env.local` et colle tes cles :
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
@@ -155,120 +172,161 @@ SCRAPINGDOG_API_KEY=...
 RAPIDAPI_KEY=...
 ```
 
-> You can also tell Claude Code directly: `Add my API keys to .env.local: ANTHROPIC_API_KEY=... SCRAPINGDOG_API_KEY=... RAPIDAPI_KEY=...`
+> Tu peux aussi dire directement a Claude Code : `Add my API keys to .env.local: ANTHROPIC_API_KEY=... SCRAPINGDOG_API_KEY=... RAPIDAPI_KEY=...`
 
-### Step 5 — Connect the Lemlist MCP
+### Etape 5 — Connecter le Lemlist MCP
 
-This is how Claude Code talks directly to Lemlist — creating campaigns, sourcing leads, pulling stats, everything.
+C'est comme ca que Claude Code parle directement a Lemlist — creation de campagnes, sourcing de leads, stats, tout.
 
-In your terminal (inside Claude Code or outside):
+Dans ton terminal (dans Claude Code ou en dehors) :
 
 ```bash
 claude mcp add --transport http lemlist https://app.lemlist.com/mcp
 ```
 
-Your browser will open a consent page. Authorize your Lemlist team and you're connected.
+Ton navigateur va s'ouvrir sur une page de consentement. Autorise ton equipe Lemlist et c'est connecte.
 
-> **If OAuth fails** (browser doesn't open), use your API key instead:
+> **Si OAuth echoue** (le navigateur ne s'ouvre pas), utilise ta cle API :
 > ```bash
-> claude mcp add --transport http lemlist https://app.lemlist.com/mcp --header "X-API-Key:YOUR_LEMLIST_API_KEY"
+> claude mcp add --transport http lemlist https://app.lemlist.com/mcp --header "X-API-Key:TA_CLE_API_LEMLIST"
 > ```
-> Get your API key at: **Settings -> Integrations -> API -> Copy Key** in Lemlist.
+> Trouve ta cle API dans Lemlist : **Settings -> Integrations -> API -> Copy Key**.
 
-### Step 6 — Install the plugin
+### Etape 6 — Installer le plugin
 
-You have two options:
+Deux options :
 
-**Option A — Install as a Claude Code plugin (recommended)**
+**Option A — Installer comme plugin Claude Code (recommande)**
 
 ```bash
 claude plugin add --from https://github.com/enzo-bys/bys_claude_outbound_engine
 ```
 
-This installs the plugin globally. You can then use it from any directory — just run `claude` and the skills are available.
+Installe le plugin globalement. Tu peux l'utiliser depuis n'importe quel dossier — lance `claude` et les skills sont disponibles.
 
-**Option B — Run locally from the project folder**
+**Option B — Lancer localement depuis le dossier du projet**
 
 ```bash
 claude --plugin-dir .
 ```
 
-This loads the plugin only for the current session, from the local folder.
+Charge le plugin uniquement pour la session en cours.
 
-Either way, accept the trust prompt when Claude asks.
+Dans les deux cas, accepte le prompt de confiance quand Claude le demande.
 
 ---
 
-## Usage
+## Utilisation
 
-### Step 1 — Set up your account
+### Etape 7 — Configurer ton compte
 
 ```
 /outbound-engine:setup
 ```
 
-Claude checks your API keys, asks for your company info, and creates your client folder.
+Claude verifie tes cles API, te demande les infos de ta boite (nom, expediteur, budget), et cree ton dossier client.
 
-### Step 2 — Build your strategy
+### Etape 8 — Construire ta strategie
 
 ```
 /outbound-engine:strategy
 ```
 
-Claude asks you 9 questions about your business, one at a time:
-1. Your website URL
-2. Your LinkedIn URL
-3. What you sell (2-3 sentences)
-4. Who your clients are
-5. Your average deal size
-6. Case studies you have
-7. Your competitors
-8. Target countries
-9. Any exclusions
+Claude te pose 9 questions sur ton business, une a la fois :
+1. Ton URL de site web
+2. Ton URL LinkedIn
+3. Ce que tu vends (2-3 phrases)
+4. Qui sont tes clients
+5. Ton deal size moyen
+6. Tes case studies
+7. Tes concurrents
+8. Pays cibles
+9. Exclusions
 
-Then it builds your **CAB-P matrix** and proposes **up to 10 targeted campaigns**, each with a specific signal, persona, geography, and language.
+Puis il construit ta **matrice CAB-P** (quelles douleurs ton offre resout) et propose **jusqu'a 10 campagnes ciblees**, chacune avec un signal, un persona, une geographie et une langue specifiques.
 
-### Step 3 — Get your leads and launch
+### Etape 9 — Obtenir tes leads
 
-You have 3 ways to get leads into a campaign:
+Tu as 3 facons d'alimenter une campagne en leads :
 
-**Option A — Source from Lemlist (recommended)**
+**Option A — Sourcer depuis Lemlist (recommande)**
 
-Just tell Claude what you're looking for:
+Dis simplement a Claude ce que tu cherches :
 ```
 Find 40 CROs at SaaS companies in France with 50-200 employees
 ```
 
-**Option B — Import a CSV or Excel file**
+Claude utilise la base de leads Lemlist pour chercher, filtrer et ajouter les leads directement a ta campagne. Aucun fichier necessaire.
 
-If you already have a lead list:
+**Option B — Importer un CSV ou Excel**
+
+Si tu as deja une liste de leads (exportee de LinkedIn, d'un CRM ou d'un tableur) :
 ```
 Here's my lead list: /path/to/leads.csv
 ```
 
-**Option C — Manual JSON (power users)**
+Claude lit le fichier, mappe les colonnes automatiquement, convertit au bon format et pousse les leads dans la campagne. Colonnes minimum : prenom, nom, entreprise. Email et URL LinkedIn ameliorent les resultats.
 
-Drop a `leads.json` file in the campaign folder with `firstName`, `lastName`, `companyName` (minimum). Add `email` and `linkedinUrl` for better results.
+**Option C — JSON manuel (power users)**
 
-**Then launch:**
+Depose un fichier `leads.json` dans le dossier de la campagne :
+
+```json
+[
+  {
+    "firstName": "Marie",
+    "lastName": "Dupont",
+    "companyName": "Acme SAS",
+    "email": "marie@acme.com",
+    "linkedinUrl": "https://linkedin.com/in/marie-dupont"
+  }
+]
+```
+
+### Etape 10 — Lancer les campagnes
+
+Une fois tes leads prets, lance :
 
 ```
 /outbound-engine:campaign
 ```
 
-Claude validates your leads, enriches them (LinkedIn + Google news), writes personalized emails, and injects everything into Lemlist.
+Claude valide tes leads, les enrichit (LinkedIn + news Google), redige des emails personnalises pour chacun, et injecte tout dans Lemlist.
 
-### Step 4 — Track and optimize
+**Exemple de prompt pour creer les structures de campagnes :**
+
+```
+Create my 3 Lemlist campaigns.
+Campaign 1 — [Persona]: [X emails + LinkedIn], delays [J0/J+2/J+5].
+Leave email bodies empty. Use {{firstName}} and {{companyName}}.
+Confirm each campaign ID.
+```
+
+> **Astuce :** Appuie sur **2** (Yes, and don't ask again) a chaque confirmation pour eviter les interruptions repetees.
+
+### Etape 11 — Finaliser dans Lemlist
+
+Apres que Claude a injecte tes campagnes :
+
+1. Va dans Lemlist — tes campagnes sont creees
+2. **Mets-les en pause immediatement** (elles sont en "running" par defaut)
+3. Colle ton copywriting dans chaque etape
+4. Configure les A/B tests
+5. Active la rotation d'inboxes (minimum 3 comptes)
+6. Importe tes leads si pas deja fait (CSV ou Lemlist database)
+7. Lance en limitant a **30-50 emails/jour/inbox** les 30 premiers jours
+
+### Etape 12 — Suivre et optimiser
 
 ```
 /outbound-engine:monitor
 ```
 
-Claude pulls your Lemlist stats and tells you which campaigns need adjustment.
+Claude tire tes stats Lemlist (taux d'ouverture, taux de reponse, taux de bounce) et te dit quelles campagnes ajuster et quoi changer.
 
 ---
 
-## The key to success: a quality brief
+## La cle du succes : un brief de qualite
 
 L'Outbound Engine est aussi bon que le brief que tu lui donnes. Un brief pauvre = des campagnes generiques. Un brief precis = de la personnalisation chirurgicale.
 
@@ -296,7 +354,7 @@ L'Outbound Engine est aussi bon que le brief que tu lui donnes. Un brief pauvre 
 
 ---
 
-## Getting the best results
+## Obtenir les meilleurs resultats
 
 ### Les 3 leviers qui font la difference
 
@@ -317,91 +375,79 @@ L'Outbound Engine est aussi bon que le brief que tu lui donnes. Un brief pauvre 
 
 ---
 
-## Post-launch: finalize in Lemlist
+## Limites a connaitre
 
-After Claude injects your campaigns:
+Ce que l'Outbound Engine ne gere **pas** :
 
-1. Go to Lemlist — your campaigns are created
-2. **Pause them immediately** (they are "running" by default)
-3. Paste your copywriting into each step
-4. Configure A/B tests
-5. Activate inbox rotation (minimum 3 accounts)
-6. Import your leads (CSV or Lemlist database)
-7. Launch and limit to 30-50 emails/day/inbox for the first 30 days
+- Conditions avancees Lemlist (si ouvert -> LinkedIn) — a configurer manuellement
+- Images cliquables et variables d'image personnalisees
+- Landing pages dynamiques
+- Branches multi-canales complexes avec logique conditionnelle
 
----
+### Workflow optimal selon le contexte
 
-## Limitations
-
-What the Outbound Engine does NOT handle:
-
-- Advanced Lemlist conditions (if opened -> LinkedIn) — configure manually
-- Clickable images and personalized image variables
-- Dynamic landing pages
-- Complex multi-channel branches with conditional logic
-
-### Optimal workflow by context
-
-| Context | Recommended approach |
-|---------|---------------------|
-| Urgent campaign (webinar, event) | Outbound Engine for structure + injection, manual copywriting in Lemlist |
-| Long-term campaign | Outbound Engine for enrichment + leads, manual copywriting in your style, then manual injection |
-| Scale (10+ campaigns) | Outbound Engine end-to-end with detailed brief |
+| Contexte | Approche recommandee |
+|----------|---------------------|
+| Campagne urgente (webinar, evenement) | Outbound Engine pour la structure + injection, copywriting manuel dans Lemlist |
+| Campagne long terme | Outbound Engine pour enrichissement + leads, copywriting dans ton style, puis injection manuelle |
+| Scale (10+ campagnes) | Outbound Engine bout en bout avec brief detaille |
 
 ---
 
-## Summary
+## Resume
 
-| Step | What you type | What happens |
-|------|--------------|-------------|
-| 1 | `/outbound-engine:setup` | API keys check + Lemlist MCP check + client folder |
-| 2 | `/outbound-engine:strategy` | 9 questions + CAB-P + 10 campaigns |
-| 3 | "Find 40 CROs in France" or drop a CSV | Leads sourced via Lemlist, CSV import, or manual JSON |
-| 4 | `/outbound-engine:campaign` | Enrich leads + write emails + inject Lemlist |
-| 5 | `/outbound-engine:monitor` | Stats + recommendations |
+| Etape | Ce que tu tapes | Ce qui se passe |
+|-------|----------------|-----------------|
+| 1-6 | Installation (voir ci-dessus) | CLI + repo + cles + MCP + plugin |
+| 7 | `/outbound-engine:setup` | Verification cles + dossier client |
+| 8 | `/outbound-engine:strategy` | 9 questions + CAB-P + 10 campagnes |
+| 9 | "Find 40 CROs in France" ou CSV | Leads sources via Lemlist, CSV, ou JSON |
+| 10 | `/outbound-engine:campaign` | Enrichir + ecrire emails + injecter Lemlist |
+| 11 | Finaliser dans Lemlist | Pause, copywriting, rotation inboxes, A/B tests |
+| 12 | `/outbound-engine:monitor` | Stats + recommandations |
 
 ---
 
 ## FAQ
 
-**Do I need to write any prompts?**
-No. The engine has built-in prompts based on proven cold email methodology. Claude adapts them to your business automatically.
+**Est-ce que je dois ecrire des prompts ?**
+Non. Le moteur a des prompts integres bases sur une methodologie de cold email eprouvee. Claude les adapte a ton business automatiquement.
 
-**What languages are supported?**
-French, English, German, Spanish, Dutch, Italian, and any other language you specify. Each campaign can have its own language.
+**Quelles langues sont supportees ?**
+Francais, anglais, allemand, espagnol, neerlandais, italien, et toute autre langue que tu specifies. Chaque campagne peut avoir sa propre langue.
 
-**How much does it cost per lead?**
-About $0.05/lead with Claude Sonnet, $0.35/lead with Claude Opus. A 10-campaign batch with 40 leads each costs roughly $20.
+**Combien ca coute par lead ?**
+Environ 0,05$/lead avec Claude Sonnet, 0,35$/lead avec Claude Opus. Un batch de 10 campagnes avec 40 leads chacune coute environ 20$.
 
-**Can I use it without Lemlist?**
-Yes. Run with `--dry-run` and the engine generates emails without injecting. Find them in `emails.json` in each campaign folder.
+**Est-ce que je peux l'utiliser sans Lemlist ?**
+Oui. Lance avec `--dry-run` et le moteur genere les emails sans les injecter. Tu les trouveras dans `emails.json` dans chaque dossier de campagne.
 
-**What format do my leads need to be in?**
-You can source leads directly from Lemlist (no file needed), import a CSV/Excel file, or provide a JSON file. Minimum fields: first name, last name, company. Add email and LinkedIn URL for best results.
+**Quel format pour mes leads ?**
+Tu peux sourcer les leads directement depuis Lemlist (aucun fichier necessaire), importer un CSV/Excel, ou fournir un fichier JSON. Champs minimum : prenom, nom, entreprise. Ajoute email et URL LinkedIn pour de meilleurs resultats.
 
-**I'm not technical. Can I still use this?**
-Yes. If you can install Claude Code, connect Lemlist, and paste 3 API keys, you're good. Claude handles everything else conversationally.
+**Je ne suis pas technique. Est-ce que je peux quand meme l'utiliser ?**
+Oui. Si tu sais installer Claude Code, connecter Lemlist, et coller 3 cles API, c'est bon. Claude gere tout le reste de maniere conversationnelle.
 
 ---
 
-## CLI Mode (power users)
+## Mode CLI (power users)
 
-If you prefer commands over conversation:
+Si tu preferes les commandes a la conversation :
 
 ```bash
-# Run a single campaign
+# Lancer une seule campagne
 python -m pipeline run --campaign clients/acme/campaigns/C01_techchange_cro_fr
 
-# Run all campaigns for a client
+# Lancer toutes les campagnes d'un client
 python -m pipeline run --client clients/acme --campaigns all
 
-# Run specific campaigns
+# Lancer des campagnes specifiques
 python -m pipeline run --client clients/acme --campaigns C01,C04,C07
 
-# Check status
+# Verifier le statut
 python -m pipeline status --client clients/acme
 
-# Individual steps
+# Etapes individuelles
 python -m pipeline enrich --campaign path/to/C04
 python -m pipeline write  --campaign path/to/C04
 python -m pipeline inject --campaign path/to/C04 --lemlist-id cam_xxx
@@ -409,18 +455,18 @@ python -m pipeline inject --campaign path/to/C04 --lemlist-id cam_xxx
 
 ---
 
-## Architecture (for developers)
+## Architecture (pour les devs)
 
 ```
-.claude-plugin/  Plugin manifest
-skills/          4 skills (SKILL.md) — invocable via /outbound-engine:*
-agents/          4 Claude Code agents (.md) — conversational UX
-pipeline/        Python engine — silent execution
-templates/       Methodology guides + YAML/JSON examples
-clients/         Client data (gitignored)
+.claude-plugin/  Manifeste du plugin
+skills/          4 skills (SKILL.md) — invocables via /outbound-engine:*
+agents/          4 agents Claude Code (.md) — UX conversationnelle
+pipeline/        Moteur Python — execution silencieuse
+templates/       Guides methodologiques + exemples YAML/JSON
+clients/         Donnees client (gitignored)
 ```
 
-**Stack**: Python 3.11+ / Claude API / Lemlist MCP / Scrapingdog / RapidAPI LinkedIn
+**Stack** : Python 3.11+ / Claude API / Lemlist MCP / Scrapingdog / RapidAPI LinkedIn
 
 ---
 
